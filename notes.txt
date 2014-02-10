@@ -1,0 +1,58 @@
+HID?
+=================
+hid.dll
+setupapi.dll
+* pinvoke.net - interop sdk resource
+* HID devices  communicates through reports consisting of 64 bytes data.
+
+
+
+
+Funktion
+=========
+* Notifiering om anslutning/borttagning av USB-enhet:
+   - Skapa en Form som med  en override av WndProc för att hantera VM_DEVICECHANGE-meddelanden från Windows. 
+   - Skicka window-handle till RegisterDeviceNotification.
+
+* Hitta ansluten enhet
+
+   - Use HidD_GetHidGuid in hid.dll to obtain the GUID that Windows uses to represent the HID class.
+   
+   - Call SetupDiGetClassDevs in setupapi.dll to get information about all devices of the class HID currently connected to the PC. You get an InfoSet back.
+
+   - The InfoSet have to be enumerated with calls to SetupDiEnumDeviceInterfaces in setupapi.dll. Each call to this function fills a DeviceInterfaceData structure with details about a device in the list with a non-zero return code.
+
+   - Now we have to fill a DeviceInterfaceData-Detail structure using a call to SetupDiGetDeviceInterfaceDetail. This finally provides us with a string that represents a path to the device (just like a file path). This path contains the VID and PID of the device amongst other things
+
+   - Parse VID and PID to check if the device of interest is connected.
+
+   - Once all this is complete, you must remember to free the infoset with a call to SetupDiDestroyDeviceInfoList.
+
+# GUI
+* Funtioner
+   - Visa om vågen är ansluten
+   - Visa om kvittoskrivaren är ansluten
+   - Visa aktuell vikt från vågen
+   -  Skriva ut en etikett
+      - med en knapp i GUI:t
+      - med en snabbtangent
+* Inställningar
+   - Välja vilken etikettmall som ska användas
+   - Välja snabbtangent för utskrift
+   
+# Working with unmanaged code
+
+* P/Invoke
+   - Short for Platfrom Invoke - access funcitons, structs and callbacks in unmanaged dlls.
+   
+* IntPtr can be a HANDLE to some unmanaged device.
+
+* Blittable data types
+   - Have a common representation in both managed and unmanaged code
+   - Does not require conversion when they are passed between managed and unmanaged code.
+
+A typical example of a type that is non-blittable, but can become blittable, is the char type. By default, it is non-blittable since it can be mapped to either Unicode or ANSI. However, because char is always Unicode in the CLR, it does become blittable when you specify [DllImportAttribute(CharSet= Unicode)]
+   
+* Pinning
+Managed code passes to unmanaged code a pointer to a managed object stored on the garbage collector heap. The alternative is to copy the object before marshall it over to the unmanaged code.
+

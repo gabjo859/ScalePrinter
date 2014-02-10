@@ -1,0 +1,111 @@
+Guid DiskGUID = new Guid(GUID_DEVINTERFACE_DISK);
+
+// We start at the "root" of the device tree and look for all
+// devices that match the interface GUID of a disk
+IntPtr h = SetupDiGetClassDevs(ref DiskGUID, IntPtr.Zero, IntPtr.Zero, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+if (h != (IntPtr)INVALID_HANDLE_VALUE)
+{
+   bool Success = true;
+   int i = 0;
+   while (Success)
+   {
+     // create a Device Interface Data structure
+     SP_DEVICE_INTERFACE_DATA dia = new SP_DEVICE_INTERFACE_DATA();
+     dia.cbSize = Marshal.SizeOf(dia);
+
+     // start the enumeration 
+     Success = SetupDiEnumDeviceInterfaces(h, IntPtr.Zero, ref DiskGUID, i, ref dia);
+     if (Success)
+     {
+       // build a DevInfo Data structure
+       SP_DEVINFO_DATA da = new SP_DEVINFO_DATA();
+       da.cbSize = Marshal.SizeOf(da);
+
+       // build a Device Interface Detail Data structure
+       SP_DEVICE_INTERFACE_DETAIL_DATA didd = new SP_DEVICE_INTERFACE_DETAIL_DATA();
+       didd.cbSize = 4 + Marshal.SystemDefaultCharSize; // trust me :)
+
+       // now we can get some more detailed information
+       int nRequiredSize = 0;
+       int nBytes = BUFFER_SIZE;
+       if (SetupDiGetDeviceInterfaceDetail(h, ref dia, ref didd, nBytes, ref nRequiredSize, ref da))
+       {
+     // current InstanceID is at the "USBSTOR" level, so we
+     // need up "move up" one level to get to the "USB" level
+     IntPtr ptrPrevious;
+     CM_Get_Parent(out ptrPrevious, da.DevInst, 0);
+
+     // Now we get the InstanceID of the USB level device
+     IntPtr ptrInstanceBuf = Marshal.AllocHGlobal(nBytes);
+     CM_Get_Device_ID(ptrPrevious, ptrInstanceBuf, nBytes, 0);
+     string InstanceID = Marshal.PtrToStringAuto(ptrInstanceBuf);
+
+     Marshal.FreeHGlobal(ptrInstanceBuf);
+       }
+     }
+     i++;
+   }
+}
+SetupDiDestroyDeviceInfoList(h);
+-----------------
+
+[StructLayout(LayoutKind.Sequential, CharSet=CharSet.Auto)]
+  struct SP_DEVICE_INTERFACE_DETAIL_DATA
+  {
+    public int cbSize;
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = BUFFER_SIZE)]
+    public string DevicePath;
+  }
+  
+  
+-------------------
+
+[DllImport("setupapi.dll", CharSet = CharSet.Auto)]
+static extern int CM_Get_Device_ID(
+   UInt32 dnDevInst,
+   IntPtr Buffer,
+   int BufferLen,
+   int ulFlags
+);
+
+[DllImport("setupapi.dll")]
+static extern int CM_Get_Parent(
+   out UInt32 pdnDevInst,
+   UInt32 dnDevInst,
+   int ulFlags
+);
+
+--------------------
+
+[DllImport(@"setupapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
+public static extern Boolean SetupDiGetDeviceInterfaceDetail(
+   IntPtr hDevInfo,
+   ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData,
+   ref SP_DEVICE_INTERFACE_DETAIL_DATA deviceInterfaceDetailData,
+   UInt32 deviceInterfaceDetailDataSize,
+   out UInt32 requiredSize,
+   ref SP_DEVINFO_DATA deviceInfoData
+);
+
+-----------------
+[DllImport(@"setupapi.dll", CharSet=CharSet.Auto, SetLastError = true)]
+public static extern Boolean SetupDiEnumDeviceInterfaces(
+   IntPtr hDevInfo,
+   ref SP_DEVINFO_DATA devInfo,
+   ref Guid interfaceClassGuid,
+   UInt32 memberIndex,
+   ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData
+);
+
+// Alternate signature if you do not care about SP_DEVINFO_DATA and wish to pass NULL (IntPtr.Zero). Note example below uses this signature.
+[DllImport(@"setupapi.dll", CharSet = CharSet.Auto, SetLastError = true)]
+public static extern Boolean SetupDiEnumDeviceInterfaces(
+   IntPtr hDevInfo,
+   IntPtr devInfo,
+   ref Guid interfaceClassGuid,
+   UInt32 memberIndex,
+   ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData
+);
+
+
+  
