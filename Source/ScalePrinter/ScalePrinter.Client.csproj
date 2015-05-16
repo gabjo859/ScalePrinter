@@ -54,7 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Scale\IScaleService.cs" />
+    <Compile Include="Interfaces\IConnectingDevice.cs" />
+    <Compile Include="Interfaces\IScaleService.cs" />
+    <Compile Include="Scale\ScaleSimulatorService.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
