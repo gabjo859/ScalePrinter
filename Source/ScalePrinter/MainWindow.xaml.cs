@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScalePrinter.Client.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace ScalePrinter.Client {
     /// </summary>
     public partial class MainWindow : Window {
         public MainWindow() {
+            this.DataContext = new MainViewModel();
             InitializeComponent();
         }
     }
