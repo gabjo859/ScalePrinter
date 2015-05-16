@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ScalePrinter.Client.Scale {
-    public class ScaleService : IScaleService {
+    public class HidScaleService : IScaleService {
 
         #region IScaleService Implementation
 

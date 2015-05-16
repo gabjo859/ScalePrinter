@@ -55,8 +55,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Scale\IScaleService.cs" />
-    <Compile Include="Scale\ScaleService.cs" />
-    <Compile Include="Scale\SetupApiInterop.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
