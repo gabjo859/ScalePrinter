@@ -5,7 +5,17 @@ using System.Text;
 
 namespace ScalePrinter.Client.Interfaces {
     public interface IScaleService : IConnectingDevice {
-        public double CurrentWeight { get; }
-        public bool IsConnected { get; }
+        double CurrentWeight { get; }
+        bool IsConnected { get; }
+        event EventHandler WeightChanged;
+    }
+
+    public class WeightChangedEventArgs : EventArgs {
+
+        public WeightChangedEventArgs(double weight) {
+            Weight = weight;
+        }
+
+        public double Weight { get; private set; }
     }
 }

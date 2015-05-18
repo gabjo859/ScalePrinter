@@ -21,5 +21,7 @@ namespace ScalePrinter.Client.Scale {
                 ConnectionStatusChanged(this, new ConnectionChangedEventArgs(IsConnected));
             }
         }
+
+        public event EventHandler WeightChanged;
     }
 }
