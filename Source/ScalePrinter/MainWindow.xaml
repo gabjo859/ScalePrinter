@@ -29,6 +29,6 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <TextBox></TextBox>
+        <TextBlock FontSize="36" Text="{Binding CurrentWeight}" />
     </DockPanel>
 </Window>

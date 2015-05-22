@@ -7,7 +7,7 @@ namespace ScalePrinter.Client.Interfaces {
     public interface IScaleService : IConnectingDevice {
         double CurrentWeight { get; }
         bool IsConnected { get; }
-        event EventHandler WeightChanged;
+        event EventHandler<WeightChangedEventArgs> WeightChanged;
     }
 
     public class WeightChangedEventArgs : EventArgs {

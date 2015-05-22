@@ -14,7 +14,7 @@ namespace ScalePrinter.Client.Scale {
             get { throw new NotImplementedException(); }
         }
 
-        public event EventHandler ConnectionStatusChanged;
+        public event EventHandler<ConnectionChangedEventArgs> ConnectionStatusChanged;
 
         private void OnConnectionStatusChanged() {
             if(ConnectionStatusChanged != null) {
@@ -22,6 +22,6 @@ namespace ScalePrinter.Client.Scale {
             }
         }
 
-        public event EventHandler WeightChanged;
+        public event EventHandler<WeightChangedEventArgs> WeightChanged;
     }
 }

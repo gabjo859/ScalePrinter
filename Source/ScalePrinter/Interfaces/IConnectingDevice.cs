@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ScalePrinter.Client.Interfaces {
     public interface IConnectingDevice {
-        event EventHandler ConnectionStatusChanged;
+        event EventHandler<ConnectionChangedEventArgs> ConnectionStatusChanged;
     }
 
     public class ConnectionChangedEventArgs : EventArgs {

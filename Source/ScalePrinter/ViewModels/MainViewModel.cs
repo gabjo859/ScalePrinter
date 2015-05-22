@@ -14,8 +14,18 @@ namespace ScalePrinter.Client.ViewModels {
 
         public MainViewModel(IScaleService scaleService) {
             this.scaleService = scaleService;
+            scaleService.ConnectionStatusChanged += scaleService_ConnectionStatusChanged;
+            scaleService.WeightChanged += scaleService_WeightChanged;
             IsScaleConnected = scaleService.IsConnected;
             IsPrinterConnected = false;
+        }
+
+        void scaleService_WeightChanged(object sender, WeightChangedEventArgs e) {
+            CurrentWeight = e.Weight;
+        }
+
+        void scaleService_ConnectionStatusChanged(object sender, ConnectionChangedEventArgs e) {
+            IsScaleConnected = e.IsConnected;
         }
 
         #region Properties
@@ -37,6 +47,16 @@ namespace ScalePrinter.Client.ViewModels {
                 NotifyPropertyChanged("IsPrinterConnected");
             }
         }
+
+        private double currentWeight;
+        public double CurrentWeight {
+            get { return currentWeight; }
+            set { 
+                currentWeight = value;
+                NotifyPropertyChanged("CurrentWeight");
+            }
+        }
+
 
         #endregion
 

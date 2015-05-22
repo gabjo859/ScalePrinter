@@ -55,7 +55,7 @@ namespace ScalePrinter.Client.Scale {
 
         #region Events
 
-        public event EventHandler ConnectionStatusChanged;
+        public event EventHandler<ConnectionChangedEventArgs> ConnectionStatusChanged;
 
         private void OnConnectionChanged(ConnectionChangedEventArgs e) {
             Console.WriteLine("Scale connection status changed to " + (e.IsConnected ? "connected" : "disconnected"));
@@ -64,7 +64,7 @@ namespace ScalePrinter.Client.Scale {
             }
         }
 
-        public event EventHandler WeightChanged;
+        public event EventHandler<WeightChangedEventArgs> WeightChanged;
 
         private void OnWeightChanged(double weight) {
             Console.WriteLine("Current weight changed to " + weight);
