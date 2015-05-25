@@ -14,9 +14,11 @@ namespace ScalePrinter.Client.ViewModels {
         private IScaleService scaleService;
 
         public MainViewModel(IScaleService scaleService) {
+
             this.scaleService = scaleService;
             scaleService.ConnectionStatusChanged += scaleService_ConnectionStatusChanged;
             scaleService.WeightChanged += scaleService_WeightChanged;
+
             IsScaleConnected = scaleService.IsConnected;
             IsPrinterConnected = false;
         }
@@ -58,7 +60,21 @@ namespace ScalePrinter.Client.ViewModels {
             }
         }
 
+        RelayCommand printCommand;
+        public ICommand PrintCommand {
+            get {
+                if (printCommand == null) {
+                    printCommand = new RelayCommand(param => Print(), param => this.IsPrinterConnected);
+                }
+                return printCommand;
+            }
+        }
+
         #endregion
+
+        protected virtual void Print() {
+            Console.WriteLine("Printing...");
+        }
 
         #region Events
 

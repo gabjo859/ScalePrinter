@@ -30,7 +30,8 @@
             </StatusBarItem>
         </StatusBar>
         <Button DockPanel.Dock="Bottom" Height="40" Content="Skriv ut" Margin="20"
-                IsEnabled="{Binding IsPrinterConnected}" />
+                IsEnabled="{Binding IsPrinterConnected}"
+                Command="{Binding PrintCommand}"/>
         <TextBlock FontSize="120"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"

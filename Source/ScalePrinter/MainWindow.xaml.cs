@@ -28,10 +28,12 @@ namespace ScalePrinter.Client {
         }
 
         void MainWindow_KeyDown(object sender, KeyEventArgs e) {
+            var viewModel = (MainViewModel)this.DataContext;
             if (e.Key == Key.P) {
-                var viewModel = (MainViewModel)this.DataContext;
                 viewModel.IsPrinterConnected = !viewModel.IsPrinterConnected;
                 Console.WriteLine("Printer is " + (viewModel.IsPrinterConnected ? "connected" : "disconnected"));
+            } else if (e.Key == Key.Enter && viewModel.PrintCommand.CanExecute(null)) {
+                viewModel.PrintCommand.Execute(null);
             }
         }
     }
