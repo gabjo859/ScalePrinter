@@ -23,7 +23,16 @@ namespace ScalePrinter.Client {
         public MainWindow() {
             var scaleService = new ScaleSimulatorService(this);
             this.DataContext = new MainViewModel(scaleService);
+            this.KeyDown += MainWindow_KeyDown;
             InitializeComponent();
+        }
+
+        void MainWindow_KeyDown(object sender, KeyEventArgs e) {
+            if (e.Key == Key.P) {
+                var viewModel = (MainViewModel)this.DataContext;
+                viewModel.IsPrinterConnected = !viewModel.IsPrinterConnected;
+                Console.WriteLine("Printer is " + (viewModel.IsPrinterConnected ? "connected" : "disconnected"));
+            }
         }
     }
 }

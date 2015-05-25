@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using ScalePrinter.Client.Interfaces;
 using ScalePrinter.Client.Scale;
+using System.Windows.Input;
 
 namespace ScalePrinter.Client.ViewModels {
     public class MainViewModel : INotifyPropertyChanged {
@@ -56,7 +57,6 @@ namespace ScalePrinter.Client.ViewModels {
                 NotifyPropertyChanged("CurrentWeight");
             }
         }
-
 
         #endregion
 

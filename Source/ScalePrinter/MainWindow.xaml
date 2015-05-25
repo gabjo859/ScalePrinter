@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Scale Connector" Height="350" Width="525">
     <DockPanel>
-        <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom" BorderBrush="Black" BorderThickness="1">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -29,6 +29,11 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <TextBlock FontSize="36" Text="{Binding CurrentWeight}" />
+        <Button DockPanel.Dock="Bottom" Height="40" Content="Skriv ut" Margin="20"
+                IsEnabled="{Binding IsPrinterConnected}" />
+        <TextBlock FontSize="120"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Text="{Binding CurrentWeight, StringFormat=N2}"/>
     </DockPanel>
 </Window>
