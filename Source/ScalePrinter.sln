@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScalePrinter.Client", "Scal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScalePrinter.IntegrationTests", "IntegrationTests\ScalePrinter.IntegrationTests.csproj", "{F86F1640-875C-44C0-AD87-F7A3066A69B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaleTest", "ScaleTest\ScaleTest.csproj", "{F36ABA4A-DC53-4055-BAD6-EB86C19E8D1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F86F1640-875C-44C0-AD87-F7A3066A69B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F86F1640-875C-44C0-AD87-F7A3066A69B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F86F1640-875C-44C0-AD87-F7A3066A69B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F36ABA4A-DC53-4055-BAD6-EB86C19E8D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F36ABA4A-DC53-4055-BAD6-EB86C19E8D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F36ABA4A-DC53-4055-BAD6-EB86C19E8D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F36ABA4A-DC53-4055-BAD6-EB86C19E8D1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

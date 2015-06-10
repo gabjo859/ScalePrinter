@@ -1,3 +1,11 @@
+
+http://www.developerfusion.com/article/84338/making-usb-c-friendly/
+
+https://github.com/mikeobrien/HidLibrary
+
+
+
+
 HID?
 =================
 hid.dll
