@@ -13,7 +13,7 @@ namespace ScaleTest {
         static void Main(string[] args) {
 
             if (!allDevices.Any()) {
-                Console.WriteLine("Found no HID devices...");
+                Console.WriteLine("INFO: Found no HID devices...");
                 Exit();
             }
 
@@ -22,7 +22,32 @@ namespace ScaleTest {
             HidDevice selectedDevice = null;
             while (true) {
                 selectedDevice = GetSelectedDevice();
-                Console.WriteLine(String.Format("\nYou selected '{0}'", selectedDevice.Description));
+                ReadDataFromDevice(selectedDevice);
+            }
+        }
+
+        private static void ReadDataFromDevice(HidDevice device) {
+            Console.WriteLine(String.Format("\nINFO: Will try to read data from device '{0}'", device.Description));
+            Console.WriteLine("INFO: Device connected: " + device.IsConnected);
+            try {
+                if (!device.IsOpen) {
+                    Console.WriteLine("INFO: Device not opened. Opening device...");
+                    device.OpenDevice();
+                }
+                Console.WriteLine("INFO: Reading started (timeout 10 foos)");
+                var hidData = device.Read(10);
+                Console.WriteLine("INFO: Reading data finished with status: " + hidData.Status);
+                if (hidData.Status == HidDeviceData.ReadStatus.Success) {
+                    var bytes = hidData.Data;
+                    Console.WriteLine("INFO: Number of bytes read: " + bytes.Length);
+                    Console.WriteLine("INFO: Bytes read:");
+                    
+                    foreach (var b in bytes) {
+                        Console.WriteLine(b);
+                    }
+                }
+            } catch (Exception e) {
+                Console.WriteLine("ERROR: Failed to read data from device. Exception:\n" + e.ToString());
             }
         }
 
